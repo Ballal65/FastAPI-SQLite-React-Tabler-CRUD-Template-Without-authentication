@@ -1,121 +1,176 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import VendorTable from '../components/VendorTable';
+import VendorModal from '../components/VendorModal';
+import ConfirmModal from '../components/ConfirmModal';
 
 export default function Dashboard() {
-  const [foodName, setFoodName] = useState('');         // For storing the food name
-  const [weightInGrams, setWeightInGrams] = useState(0); // For storing the quantity in grams
-  const [nutrientInfo, setNutrientInfo] = useState(); // For storing nutrient information
-  const [disabledFlag, setDisabledFlag] = useState(false);
-  const [buttonText, setButtonText] = useState('Submit');
+  const [vendors, setVendors] = useState([]);
+  const [vendorDetails, setVendorDetails] = useState({
+    companyName: '',
+    contactPerson: '',
+    contactPersonPosition: '',
+    email: '',
+    phone: ''
+  });
+  const [isEdit, setIsEdit] = useState(false);
+  const [currentVendorId, setCurrentVendorId] = useState(null);
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
 
-  const handleSubmit = async (e) => {
+  // Fetch vendors on load
+  useEffect(() => {
+    fetchVendors();
+  }, []);
 
-    e.preventDefault();
 
-    if (foodName === '') {
-      alert("Food name can't be empty");
-      return;
+  //Hiding error or message after few seconds
+  useEffect(() => {
+    if (message || error) {
+      // Set a timer to clear the message and error after 5 seconds
+      const timer = setTimeout(() => {
+        setMessage(''); // Clear the message
+        setError('');   // Clear the error
+      }, 3000); // 5000 milliseconds = 5 seconds
+  
+      // Cleanup function to clear the timer if the component unmounts
+      return () => clearTimeout(timer);
+    }
+  }, [message, error]); // Dependency array includes both message and error
+
+  //Get vendors table
+  const fetchVendors = async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/vendors/all-vendors`);
+      const data = await response.json(); // Ensure response is parsed as JSON
+      
+      if (Array.isArray(data)) {
+        setVendors(data); // Only set if data is an array
+      } else {
+        setVendors([]); // If the data is not an array, fallback to empty array
+      }
+    } catch (error) {
+      console.error("Error fetching vendors: ", error);
+      setVendors([]); // Set an empty array on error
+    }
+  };
+  
+  //Set details fo vendor to edit
+  const handleEdit = (vendor) => {
+    setVendorDetails(vendor);
+    setCurrentVendorId(vendor.id);
+    setIsEdit(true);
+  };
+
+  //Set details of vendor to delete
+  const handleDelete = (vendorId) => {
+    setCurrentVendorId(vendorId);
+  };
+
+  //Update input values when adding a new vendor
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setVendorDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
+  };
+
+  // Function to handle when "Add Vendor" button is clicked
+  const handleAddNew = () => {
+    // Reset the form values when adding a new vendor
+    setVendorDetails({
+      companyName: '',
+      contactPerson: '',
+      contactPersonPosition: '',
+      email: '',
+      phone: ''
+    });
+    setIsEdit(false); // Make sure it's not in edit mode
+  };
+
+  // Function to edit or create new vendor based no isEdit
+  const handleSubmit = async () => {
+    const method = isEdit ? 'PUT' : 'POST';
+    const url = isEdit ? `http://localhost:8000/vendors/update-vendor/${currentVendorId}` : 'http://localhost:8000/vendors/add-vendor';
+    
+    const response = await fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(vendorDetails)
+    });
+
+    if (response.status === 200 || response.status === 201) {
+      setMessage(isEdit ? 'Vendor updated successfully.' : 'Vendor added successfully.');
+      fetchVendors();
+    } else {
+      setError('Failed to save vendor.');
     }
 
-    // Disabling submit button to avoid multiple requests
-    setDisabledFlag(true);
-    setButtonText('Loading...');
-    
-    // Fetch data from the backend API
-    const response = await fetch(`http://localhost:8000/food/${foodName}/${weightInGrams}`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+    setVendorDetails({
+      companyName: '',
+      contactPerson: '',
+      contactPersonPosition: '',
+      email: '',
+      phone: ''
+    });
+    setIsEdit(false);
+  };
+
+  //Function to delete a vendors
+  const handleDeleteConfirm = async (vendorId) => {
+    const response = await fetch(`http://localhost:8000/vendors/delete-vendor/${vendorId}`, {
+      method: 'DELETE',
     });
 
     if (response.status === 200) {
-      const result = await response.json();
-      if (result.Error) {
-        alert(result.Error);
-        setDisabledFlag(false);
-        setButtonText('Submit');
-      }
-      else{
-        setNutrientInfo(result);
-        setDisabledFlag(false);
-        setButtonText('Submit');
-      }
-    }
-
-    if(response.status != 200){
-      alert(response.statusText);
+      setMessage('Vendor deleted successfully.');
+      fetchVendors(); // Refresh vendors after deletion
+    } else {
+      setError('Failed to delete vendor.');
     }
   };
 
   return (
     <>
-      <body>
-        <div className='page-wrapper'>
-          <div className='page-body'>
-            <div className='page page-center'>
-              <div className='container container-tight py-5'>
-                <div className='row'>
-                    <div className='card card-md'>
-                      <div className='card-body'>
-                        <h2 className='text-center mb-4'>Enter Food & Quantity</h2>
-                        <div className='mb-3'>
-                          <label className='form-label required'>Food Item</label>
-                          <input
-                            className='form-control'
-                            type='text'
-                            value={foodName}
-                            onChange={(e) => setFoodName(e.target.value)}
-                          />
-                        </div>
-                        <div className='mb-3'>
-                          <label className='form-label required'>Quantity in grams</label>
-                          <input
-                            className='form-control'
-                            type='number'
-                            value={weightInGrams}
-                            onChange={(e) => setWeightInGrams(e.target.value)}
-                          />
-                        </div>
-                        <button 
-                          className='btn btn-green' 
-                          name="submit" 
-                          onClick={handleSubmit}
-                          disabled={disabledFlag}>{buttonText}</button>
-                      </div>
-                    </div>
-                    <div className='card'>
-                      <div className="list-group list-group-flush overflow-auto" style={{ maxHeight: '55vh' }}>
-                        {/* Remove dummy text and display nutrient information */}
-                        {nutrientInfo ? (
-                          <>
-                            <div className='list-group-item'>Calories: {nutrientInfo.Calories}</div>
-                            <div className='list-group-item'>Protein: {nutrientInfo.Protein}</div>
-                            <div className='list-group-item'>Fat: {nutrientInfo.Fat}</div>
-                            <div className='list-group-item'>Carbohydrates: {nutrientInfo.Carbohydrates}</div>
-                            <div className='list-group-item'>Fiber: {nutrientInfo.Fiber}</div>
-                            <div className='list-group-item'>Sugars: {nutrientInfo.Sugars}</div>
-                            <div className='list-group-item'>
-                              <h4>Vitamins and Minerals:</h4>
-                              {nutrientInfo['Vitamins and Minerals'] && Object.keys(nutrientInfo['Vitamins and Minerals']).length > 0 ? (
-                                Object.entries(nutrientInfo['Vitamins and Minerals']).map(([key, value]) => (
-                                  <div key={key} className='list-group-item'>
-                                    {key}: {value}
-                                  </div>
-                                ))
-                              ) : (
-                                <div className='list-group-item'>No vitamins and minerals data available.</div>
-                              )}
-                            </div>
-                          </>
-                        ) : (
-                          <div className='list-group-item'>Enter food and quantity to see nutrient information</div>
-                        )}
-                      </div>
-                    </div>
-                </div>
+      <div className="page-wrapper">
+        <div className="page-header d-print-none mb-3">
+          <div className="container-xl">
+            <div className="row g-2 align-items-center">
+              <div className="col">
+                <h2 className="page-title">
+                  Vendor Information
+                </h2>
+              </div>
+              <div className="col-auto ms-auto d-print-none">
+                <button href="#" className="btn btn-yellow" onClick={() => handleAddNew()} data-bs-toggle="modal" data-bs-target="#vendorModal">
+                  {/* Download SVG icon from http://tabler-icons.io/i/plus */}
+                  <svg xmlns="http://www.w3.org/2000/svg" className="icon" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                  Add Vendor
+                </button>
               </div>
             </div>
           </div>
         </div>
-      </body>
+
+        <div className="container-xl">
+          
+          {message && <div className='alert alert-success'>{message}</div>}
+          {error && <div className='alert alert-danger'>{error}</div>}
+
+          <div className='card'>
+            <div className='card-header'>
+              <div className='card-title'>
+                Vendors List
+              </div>
+            </div>
+            <VendorTable vendors={vendors} onEdit={handleEdit} onDelete={handleDelete} />
+          </div>
+        </div>
+
+        {/* Modals */}
+        <VendorModal vendorDetails={vendorDetails} handleChange={handleChange} handleSubmit={handleSubmit} isEdit={isEdit} />
+        <ConfirmModal vendorId={currentVendorId} onDeleteConfirm={handleDeleteConfirm} />
+      </div>
     </>
   );
 }

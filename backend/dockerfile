@@ -17,4 +17,5 @@ COPY ./app /code/app
 EXPOSE 8000
 
 #This will not be executed as we are using docker-compose
-CMD ["python", "app/main.py"]
+#Add true or false argument for reload state. By default its false
+CMD ["python", "-m","app.main"] 

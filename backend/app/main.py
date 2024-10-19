@@ -1,13 +1,18 @@
 import sys
 import uvicorn
 from fastapi import FastAPI
-from routers import foods
 from fastapi.middleware.cors import CORSMiddleware
+from app.routers import vendors
+from app.database import Base, engine
+#If we don't import this FastAPI will not create a table
+from app.models import Vendor 
 
 app = FastAPI()
 
-app.include_router(foods.router)
+#Binding the database with main.py
+Base.metadata.create_all(bind=engine)
 
+app.include_router(vendors.router)
 # CORS origins
 ORIGINS = [
     "http://localhost:3000",
@@ -26,7 +31,7 @@ app.add_middleware(
 
 @app.get("/")
 async def get_message():
-    return {"Message": "Hello from FastAPI. More power to you!"}
+    return {"Message": "Hello from FastAPI."}
 
 if __name__ == "__main__":
     print(f"By default reload state is False.")
@@ -40,4 +45,4 @@ if __name__ == "__main__":
             reload = True
     print(f"Reload State: {reload}")
 
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=reload)
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=reload)

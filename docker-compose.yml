@@ -1,15 +1,15 @@
-version: '3.8'
-
 services:
   backend:
     build: ./backend
     container_name: backend
-    command: ["/bin/sh", "-c", "cd app && python main.py false"] #Write true if you want reload state to be true.
+    command: ["python", "-m", "app.main", "false"]
     volumes:
-      - ./backend:/code
+      - ./backend:/code  # Mount the entire backend folder for the code
+      - ./backend/data:/code/data  # Mount only the data folder for SQLite persistence
+
     ports:
       - "8000:8000"
-
+  
   frontend:
     build: ./frontend
     container_name: frontend
@@ -21,3 +21,7 @@ services:
       - ./frontend/src:/app/src
       - ./frontend/public:/app/public
     command: ["serve", "-s", "build", "-l", "tcp://0.0.0.0:3000"]
+
+volumes:
+  sqlite_data:
+    driver: local

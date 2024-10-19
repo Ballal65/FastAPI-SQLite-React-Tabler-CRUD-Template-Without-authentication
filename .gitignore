@@ -1,0 +1,5 @@
+# Ignore Python virtual environment folder
+venv/
+backend/app/.env
+frontend/node_modules
+__pycache__/

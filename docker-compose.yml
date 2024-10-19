@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: backend
+    command: ["/bin/sh", "-c", "cd app && python main.py false"] #Write true if you want reload state to be true.
+    volumes:
+      - ./backend:/code
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+    command: ["serve", "-s", "build", "-l", "tcp://0.0.0.0:3000"]

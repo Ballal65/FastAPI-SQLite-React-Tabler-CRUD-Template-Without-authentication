@@ -3,3 +3,4 @@ venv/
 backend/app/.env
 frontend/node_modules
 __pycache__/
+backend/data/sql_app.db

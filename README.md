@@ -10,4 +10,4 @@ This repository is designed as a template for anyone who wishes to build full-st
 
 ## Overview
 This diagram illustrates the project architecture:
-![Project Architecture][https://github.com/Ballal65/FastAPI-SQLlite-React-Tabler--CRUD-Template-Without-authentication/blob/main/Docker%20Overview.png]
+![Project Architecture](https://github.com/Ballal65/FastAPI-SQLlite-React-Tabler--CRUD-Template-Without-authentication/blob/main/Docker%20Overview.png)

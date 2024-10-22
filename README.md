@@ -11,3 +11,21 @@ This repository is designed as a template for anyone who wishes to build full-st
 ## Overview
 This diagram illustrates the project architecture:
 ![Project Architecture](https://github.com/Ballal65/FastAPI-SQLlite-React-Tabler--CRUD-Template-Without-authentication/blob/main/Docker%20Overview.png)
+
+#Backend
+## Folder Structure
+```
+|- backend
+|--- app
+|------ __init__.py
+!------ database.py #Creating SQLite engine, Base, SessionLocal
+|------ main.py
+|------ models.py # SQLAlchemy models
+|--- routers
+|------ __init__.py
+|------ vendors.py #CRUD router
+!--- data
+!------ sql_app.db
+!--- dockerfile
+!--- requirements.txt
+```

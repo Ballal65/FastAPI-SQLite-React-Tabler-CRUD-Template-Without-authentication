@@ -1,4 +1,4 @@
-# FastAPI, React, SQLlite CRUD Template
+# FastAPI, React, SQLite CRUD Template
 This repository is designed as a template for anyone who wishes to build full-stack applications using FastAPI for the backend, React for the frontend, SQLite for the database, and Docker for containerization. It's a versatile, lightweight, and powerful stack that I've used for both personal projects and internal company applications.
 
 ## Why I Chose This Stack

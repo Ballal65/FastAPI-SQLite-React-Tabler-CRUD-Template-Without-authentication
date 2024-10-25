@@ -18,14 +18,28 @@ This diagram illustrates the project architecture:
 |- backend
 |--- app
 |------ __init__.py
-!------ database.py #Creating SQLite engine, Base, SessionLocal
-|------ main.py
-|------ models.py # SQLAlchemy models
+|------ database.py   # Creating SQLite engine, Base, SessionLocal
+|------ main.py       # FastAPI application entry point
+|------ models.py     # SQLAlchemy models
 |--- routers
 |------ __init__.py
-|------ vendors.py #CRUD router
-!--- data
-!------ sql_app.db
-!--- dockerfile
-!--- requirements.txt
+|------ vendors.py    # CRUD router for managing vendors
+|--- data
+|------ sql_app.db    # SQLite database file
+|--- dockerfile       # Dockerfile for containerizing the FastAPI app
+|--- requirements.txt # Python dependencies for the project
 ```
+## Backend Important files
+- database.py: Contains the configuration for the SQLite database and SQLAlchemy engine. It also defines SessionLocal for database session management and Base for model definitions.
+
+- main.py: The main entry point for the FastAPI app, where the API routes are defined and FastAPI is initialized.
+
+- models.py: Defines the database models using SQLAlchemy, which are the structure of the tables in the SQLite database.
+
+- vendors.py: Contains CRUD operations (Create, Read, Update, Delete) for the Vendor resource using FastAPI and SQLAlchemy. Pydantic models are used for input validation.
+
+- sql_app.db: The SQLite database file where all data for the project is stored.
+
+- dockerfile: Defines how to containerize the FastAPI application using Docker.
+
+![Backend Docs](https://github.com/Ballal65/FastAPI-SQLlite-React-Tabler--CRUD-Template-Without-authentication/blob/main/Backend%20Docs.png)

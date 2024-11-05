@@ -44,5 +44,5 @@ This diagram illustrates the project architecture:
 
 ![Backend Docs](https://github.com/Ballal65/FastAPI-SQLlite-React-Tabler--CRUD-Template-Without-authentication/blob/main/Backend%20Docs.png)
 
-##Frontend
+## Frontend
 ![Frontend Screenshot](https://github.com/Ballal65/FastAPI-SQLlite-React-Tabler--CRUD-Template-Without-authentication/blob/main/Frontend%20Screenshot.png)

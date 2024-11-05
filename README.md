@@ -43,3 +43,6 @@ This diagram illustrates the project architecture:
 - dockerfile: Defines how to containerize the FastAPI application using Docker.
 
 ![Backend Docs](https://github.com/Ballal65/FastAPI-SQLlite-React-Tabler--CRUD-Template-Without-authentication/blob/main/Backend%20Docs.png)
+
+##Frontend
+![Frontend Screenshot](https://github.com/Ballal65/FastAPI-SQLlite-React-Tabler--CRUD-Template-Without-authentication/blob/main/Frontend%20Screenshot.png)

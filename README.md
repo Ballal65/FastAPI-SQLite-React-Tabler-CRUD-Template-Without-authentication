@@ -68,4 +68,12 @@ This diagram illustrates the project architecture:
 |------ favicon            # Different favicon files
 ```
 
+## Description 
+The screenshot shows Dashboard.js, which uses VendorTable.js to display the table. When you click Add vendor, the VendorModal.js modal shows up, which is used to create a vendor. The same modal is used to edit the selected vendor. ConfirmModal.js modal opens when you click the delete button for a vendor. I haven't added pagination yet. 
+Ignore the header. It is a sample header that we can use for other projects. The header shows the favicon from the public/favicon folder. 
+
 ![Frontend Screenshot](https://github.com/Ballal65/FastAPI-SQLlite-React-Tabler--CRUD-Template-Without-authentication/blob/main/Frontend%20Screenshot.png)
+
+# How to use this template
+## With Docker
+

@@ -44,5 +44,28 @@ This diagram illustrates the project architecture:
 
 ![Backend Docs](https://github.com/Ballal65/FastAPI-SQLlite-React-Tabler--CRUD-Template-Without-authentication/blob/main/Backend%20Docs.png)
 
-## Frontend
+# Frontend
+## Folder Structure
+```
+|- Frontend
+|--- package.json
+|--- package-lock.json
+|--- dockerfile
+!--- src
+|------ app.js             # App Routes
+|------ index.js           # The entry point of a React application
+|------ pages
+|--------- Dashboard.js    # Vendors Page
+|--------- Example.js      # Sample empty Page
+|------ components
+|--------- ConfirmModal.js # Modal to confirm vendor delete
+|--------- VendorModal.js  # Modal to create or edit vendor
+|--------- VendorTable.js  # Simple vendors table with CRUD buttons
+|--- public
+|------ index.html         # Created to include Tabler css
+|------ dist               # Tabler assets
+|------ static             # Table assets
+|------ favicon            # Different favicon files
+```
+
 ![Frontend Screenshot](https://github.com/Ballal65/FastAPI-SQLlite-React-Tabler--CRUD-Template-Without-authentication/blob/main/Frontend%20Screenshot.png)

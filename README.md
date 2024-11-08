@@ -76,4 +76,11 @@ Ignore the header. It is a sample header that we can use for other projects. The
 
 # How to use this template
 ## With Docker
+Running the app with Docker is straightforward. You must start your Docker engine and execute this command in the root folder. The command will create containers using the docker-compose.yml file and Docker files from the frontend and backend folders. 
+```
+docker-compose up --build
+```
+
+## Without Docker
+
 

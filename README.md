@@ -106,4 +106,4 @@ npm install
 npm start
 ```
 # Database mount
-I love working with SQLite db for smaller or personal applications. The database is safe even if you destroy the docker container as we are using docker volume. A Docker volume is a storage mechanism in Docker that allows containers to persist data, share data between containers, or access data on the host filesystem. You can find SQLite db `sql_app.db` file in the `backend/daata`. 
+I love working with SQLite db for smaller or personal applications. The database is safe even if you destroy the docker container as we are using docker volume. A Docker volume is a storage mechanism in Docker that allows containers to persist data, share data between containers, or access data on the host filesystem. You can find the SQLite db `sql_app.db` file in the `backend/data`. 

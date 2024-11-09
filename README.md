@@ -4,7 +4,7 @@ This repository is designed as a template for anyone who wishes to build full-st
 ## Why I Chose This Stack
 - FastAPI: Fast, modern, and asynchronous framework for building APIs with Python.
 - React: One of the most popular JavaScript libraries for building user interfaces.
-- SQLite: A simple, lightweight database engine that's perfect for small to medium-sized applications.
+- SQLite: A simple, lightweight database engine perfect for small to medium-sized applications.
 - Tabler: A free and open-source web application UI kit based on Bootstrap 5, with hundreds of responsive components and multiple layouts.
 - Docker: Easy setup and deployment across different environments, ensuring that "it works on my machine" for everyone.
 
@@ -69,8 +69,8 @@ This diagram illustrates the project architecture:
 ```
 
 ## Description 
-The screenshot shows Dashboard.js, which uses VendorTable.js to display the table. When you click Add vendor, the VendorModal.js modal shows up, which is used to create a vendor. The same modal is used to edit the selected vendor. ConfirmModal.js modal opens when you click the delete button for a vendor. I haven't added pagination yet. 
-Ignore the header. It is a sample header that we can use for other projects. The header shows the favicon from the public/favicon folder. 
+The screenshot shows Dashboard.js, which uses VendorTable.js to display the table. When you click Add Vendor, the VendorModal.js modal shows up, which is used to create a vendor. The same modal is used to edit the selected vendor. ConfirmModal.js modal opens when you click the delete button for a vendor. I haven't added pagination yet. 
+Ignore the header. It is a sample header that we can use for other projects. The header shows the favicon from the public/favicon folder. The HTML code written in the front end is based on the Tabler theme. To learn more about tabler visit `https://tabler.io/admin-template` 
 
 ![Frontend Screenshot](https://github.com/Ballal65/FastAPI-SQLlite-React-Tabler--CRUD-Template-Without-authentication/blob/main/Frontend%20Screenshot.png)
 
@@ -82,5 +82,28 @@ docker-compose up --build
 ```
 
 ## Without Docker
+### Backend
+1. Navigate to the backend folder, you will need to create a virtual environment with 
+```
+python -m venv venv
+```
+2. Install all dependencies
+```
+pip install -r requirements.txt
+```
+3. Go to the `backend/app` folder and start your application. You can add one argument, 'True' or 'False', to specify the reload state. By default, it is false.
+```
+python main.py (True/False)
+```
 
-
+### Frontend
+1. Navigate to the frontend folder. Install dependencies.
+ ```
+npm install
+ ```
+2. Start the app.
+```
+npm start
+```
+# Database mount
+I love working with SQLite db for smaller or personal applications. The database is safe even if you destroy the docker container as we are using docker volume. A Docker volume is a storage mechanism in Docker that allows containers to persist data, share data between containers, or access data on the host filesystem. You can find SQLite db `sql_app.db` file in the `backend/daata`. 

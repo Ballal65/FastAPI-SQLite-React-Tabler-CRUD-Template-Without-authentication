@@ -76,11 +76,20 @@ Ignore the header. It is a sample header that we can use for other projects. The
 
 # How to use this template
 ## With Docker
-Running the app with Docker is straightforward. If you are running the docker in localhost, `docker compose up --build -d` will work just fine. If you want to try this out some place else, edit the `.env` file in `frontend/.env`. It looks like 
+If you are running the docker in localhost, `docker compose up --build -d` will work just fine. If you want to try this out some place else, edit the `.env` file in `frontend/.env`. It looks like 
 ```
 REACT_APP_BACKEND_API_URL=http://backend:8000
 ```
-Replace the work backend with your IP. You must start your Docker engine and execute this command in the root folder. The command will create containers using the docker-compose.yml file and Docker files from the frontend and backend folders. 
+Replace the work backend with your IP. 
+In your backend folder you will need to edit the main.py file to add the IP to origins.
+```
+ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    # Add other origins as needed
+]
+```
+Once, frontend/.env file and backend/main.py is edited, running the app with Docker is straightforward.You must start your Docker engine and execute this command in the root folder. The command will create containers using the docker-compose.yml file and Docker files from the frontend and backend folders. 
 ```
 docker compose up --build -d
 ```

@@ -40,7 +40,9 @@ export default function Dashboard() {
   //Get vendors table
   const fetchVendors = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/vendors/all-vendors`);
+      const API_BASE_URL = process.env.REACT_APP_BACKEND_API_URL;
+      // const response = await fetch('http://localhost:8000/vendors/all-vendors');
+      const response = await fetch(`${API_BASE_URL}/vendors/all-vendors`);
       const data = await response.json(); // Ensure response is parsed as JSON
       
       if (Array.isArray(data)) {
@@ -91,8 +93,9 @@ export default function Dashboard() {
   // Function to edit or create new vendor based no isEdit
   const handleSubmit = async () => {
     const method = isEdit ? 'PUT' : 'POST';
-    const url = isEdit ? `http://localhost:8000/vendors/update-vendor/${currentVendorId}` : 'http://localhost:8000/vendors/add-vendor';
-    
+    const API_BASE_URL = process.env.REACT_APP_BACKEND_API_URL;
+    //const url = isEdit ? `http://localhost:8000/vendors/update-vendor/${currentVendorId}` : 'http://localhost:8000/vendors/add-vendor';
+    const url = isEdit ? `${API_BASE_URL}/vendors/update-vendor/${currentVendorId}` : `${API_BASE_URL}/vendors/add-vendor`;
     const response = await fetch(url, {
       method,
       headers: { 'Content-Type': 'application/json' },
@@ -118,7 +121,9 @@ export default function Dashboard() {
 
   //Function to delete a vendors
   const handleDeleteConfirm = async (vendorId) => {
-    const response = await fetch(`http://localhost:8000/vendors/delete-vendor/${vendorId}`, {
+    const API_BASE_URL = process.env.REACT_APP_BACKEND_API_URL;
+    const response = await fetch(`${API_BASE_URL}/vendors/delete-vendor/${vendorId}`, {
+    //const response = await fetch(`http://localhost:8000/vendors/delete-vendor/${vendorId}`, {
       method: 'DELETE',
     });
 
